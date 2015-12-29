@@ -1,0 +1,46 @@
+{
+  "name": "jh-react-skeleton",
+  "version": "1.0.0",
+  "description": "React Skeleton using Webpack for dependencies and hot reloading",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server --devtool eval-source-maps --progress --colors --hot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pandemiccreative/react-skeleton.git"
+  },
+  "keywords": [
+    "React",
+    "ReactJS",
+    "Webpack"
+  ],
+  "author": "Justin Hurt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pandemiccreative/react-skeleton/issues"
+  },
+  "homepage": "https://github.com/pandemiccreative/react-skeleton#readme",
+  "devDependencies": {
+    "babel": "^6.3.26",
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "css-loader": "^0.23.1",
+    "exports-loader": "^0.6.2",
+    "file-loader": "^0.8.5",
+    "imports-loader": "^0.6.5",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.2",
+    "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0"
+  },
+  "dependencies": {
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3"
+  }
+}
