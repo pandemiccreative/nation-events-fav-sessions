@@ -1,14 +1,24 @@
 import React from 'react';
+import Reflux from 'reflux';
 import AppHeader from './AppHeader.jsx';
 import SessionFilter from './SessionFilter.jsx';
 import SessionPagination from './SessionPagination.jsx';
 import RoundList from './RoundList.jsx';
+import Actions from '../reflux/actions.jsx';
+import FavSessionStore from '../reflux/fav-sessions-store.jsx';
 
 let App = React.createClass({
+  mixins: [Reflux.listenTo(FavSessionStore, 'onChange')],
   getInitialState: function(){
     return {
-      favedSessions: ['001', '002', '003']
+      favedSessions: []
     };
+  },
+  componentWillMount: function(){
+    Actions.getFavSessions();
+  },
+  onChange: function(event, data){
+    this.setState({favedSessions: data});
   },
   render: function(){
 
