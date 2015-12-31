@@ -11,7 +11,6 @@ let App = React.createClass({
     };
   },
   render: function(){
-    let sessionData = require('../data/sessions.json');
 
     let favedSessionNodes = this.state.favedSessions.map(function(session){
       return (<li key={session}>{session}</li>);
@@ -25,7 +24,7 @@ let App = React.createClass({
         <SessionFilter />
         <main className='app-sessions'>
           <SessionPagination />
-          <RoundList sessionData={sessionData} />
+          <RoundList />
         </main>
       </div>
     );

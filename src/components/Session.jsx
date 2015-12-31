@@ -7,6 +7,9 @@ let Session = React.createClass({
       favText: 'Fav'
     };
   },
+  componentWillMount: function(){
+    
+  },
   handleClick: function(e){
     e.preventDefault();
     if(this.state.favorited){
