@@ -1,4 +1,6 @@
-import HelloWorld from './components/HelloWorld.jsx';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App.jsx';
 import './less/core.less';
 
-document.write(HelloWorld);
+ReactDOM.render(<App />, document.querySelector('.app'));
