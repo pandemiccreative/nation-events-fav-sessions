@@ -8,7 +8,7 @@ let Round = React.createClass({
         <header className='round-header'>
           <h2>Round {this.props.round}</h2>
         </header>
-        <SessionList sessions={this.props.sessions} />
+        <SessionList filterFavs={this.props.filterFavs} sessions={this.props.sessions} favSessions={this.props.favSessions} />
       </section>
     );
   }

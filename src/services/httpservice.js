@@ -8,7 +8,8 @@ let service = {
       return response.json();
     });
   },
-  put: function(url, session){
+  post: function(url, session){
+    console.log(session);
     return fetch(baseUrl + url, {
       headers: {
         'Accept': 'text/plain',
