@@ -12,6 +12,17 @@ let filterStore = Reflux.createStore({
     speaker: [],
     session: []
   },
+  toggleFilter: function(e){
+    if(e.target.type === 'checkbox' && e.target.checked){
+      this.addToFilter(e.target.type, e.target.value);
+    } else if(e.target.type === 'checkbox' && !e.target.checked){
+      this.delFromFilter(e.target.type, e.target.value);
+    } else if(e.target.value){
+      this.addToFilter(e.target.type, e.target.value);
+    }
+
+    window.history.pushState('Filter', '', this.updateQuery(e.target.name, (e.target.checked) ? true : null));
+  },
   addToFilter: function(type, filter){
     switch(filter.toLowerCase()){
       case 'favorites':
@@ -40,7 +51,6 @@ let filterStore = Reflux.createStore({
       default:
         break;
     }
-    console.log(this.filterBy);
     this.fireUpdate();
   },
   delFromFilter: function(type, filter){
@@ -83,8 +93,44 @@ let filterStore = Reflux.createStore({
       default:
         break;
     }
-    console.log(this.filterBy);
     this.fireUpdate();
+  },
+  updateQuery: function(key, val, url){
+    if(!url) url = window.location.href;
+    let regEx = new RegExp("([?&])" + key + "=.*?(&|#|$)(.*)", "gi");
+    let hash;
+    console.log(regEx);
+    console.log(val);
+
+    if(regEx.test(url)){
+      if(typeof val !== 'undefined' && val !== null){
+        url = url.replace(regEx, '$1' + key + '=' + val + '$2$3');
+          console.log(url);
+        url = url.split('?');
+        return (typeof url[1] !== 'undefined' && url[1] !== null) ? '?' + url[1] : './';
+      } else{
+        hash = url.split('#');
+        url = hash[0].replace(regEx, '$1$3').replace(/(&|\?)$/, '');
+        if(typeof hash[1] !== 'undefined' && hash[1] !== null){
+          url += '#' + hash[1];
+        }
+        url = url.split('?');
+        return (typeof url[1] !== 'undefined' && url[1] !== null) ? '?' + url[1] : './';
+      }
+    } else{
+      if(typeof val !== 'undefined' && val !== null){
+        let separator = url.indexOf('?') !== -1 ? '&' : '?';
+        hash = url.split('#');
+        url = hash[0] + separator + key + '=' + val;
+        if(typeof hash[1] !== 'undefined' && hash[1] !== null){
+          url += '#' + hash[1];
+        }
+        url = url.split('?');
+        return (typeof url[1] !== 'undefined' && url[1] !== null) ? '?' + url[1] : './';
+      }
+      url = url.split('?');
+      return (typeof url[1] !== 'undefined' && url[1] !== null) ? '?' + url[1] : './';
+    }
   },
   fireUpdate: function(){
     this.trigger('change', this.filterBy);

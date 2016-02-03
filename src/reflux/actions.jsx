@@ -10,7 +10,8 @@ let Actions = Reflux.createActions([
   'getSessions',
   'addToFilter',
   'delFromFilter',
-  'clearFilter'
+  'clearFilter',
+  'toggleFilter'
 ]);
 
 export default Actions;

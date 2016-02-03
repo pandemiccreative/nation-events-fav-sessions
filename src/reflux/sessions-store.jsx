@@ -12,73 +12,65 @@ let SessionStore = Reflux.createStore({
       this.filterSessions(json, filter);
     }.bind(this));
   },
+  // Filters the session list based on the filter parameters.
   filterSessions: function(data, filter){
+    // Create an empty array to contain each Round as an object
     let rounds = [];
 
+    // Parse through each round provided in the data parameter (JSON)
     data.map(function(round){
-
+      // Checks if the Round Filter setting is set
       if(!_.isEmpty(filter.round)){
-        // console.log(filter.round.indexOf(round.round.toLowerCase()));
+        // Checks if the current round being parsed is listed in the filter
         if(filter.round.indexOf(round.round.toLowerCase()) === -1){
+          // If the current round is not selected in the filter escape the function
           return;
         }
       }
 
+      // Import filter parameter to new container var
       let newFilter = filter;
+      // Remove K/V pairs that contain a boolean (Removes Favorite Session Filter [Handeled elsewhere])
       newFilter = _.omit(newFilter, _.isBoolean);
+      // Remove any K/V pairs with an empty V
       newFilter = _.omit(newFilter, _.isEmpty);
+      // Remove the Round K/V pair (Handled above)
       newFilter = _.omit(newFilter, 'round');
 
-      // let sessions = round.sessions;
-      // let filteredSessions = _.filter(sessions, function(session){
-      //   let result = false;
-      //   _.forIn(newFilter, function(value, key){
-      //     let sessionVals = _.map(_.flatten(_.values(session)), _.method('toLowerCase'));
-      //     if(_.includes(sessionVals, _(value).toString())){
-      //       result = true;
-      //     }
-      //   });
-      //   return result;
-      // });
-      //
-      // round.sessions = (filteredSessions.length > 0) ? filteredSessions : round.sessions;
+      // Flattens the newFilter object into an array, removes K from K/V pairs
+      newFilter = _.values(newFilter);
+      // console.log(newFilter);
 
-
-
-      // let sessions = round.sessions;
-      // let filteredSessions = _.filter(sessions, function(session){
-      //   let results = [];
-      //   _.forIn(newFilter, function(value, key){
-      //     console.log(value)
-      //     if(_.isArray(value)){
-      //
-      //     }
-      //     _.map('101', function(val){
-      //       console.log(val)
-      //     })
-      //     let sessionVals = _.map(_.flatten(_.values(session)), _.method('toLowerCase'));
-      //     let result = (_.includes(sessionVals, _(value).toString())) ? true : false;
-      //     // console.log(result);
-      //     // results.push(result);
-      //   });
-      //   // console.log(results);
-      //   return results;
-      // });
-      // round.sessions = (filteredSessions.length > 0) ? filteredSessions : round.sessions;
-
-      newFilter = _.flatten(_.values(newFilter), true);
+      // Stores session data for the round in a container var
       let sessions = round.sessions;
+      // Creates an empty array to house the filtered sessions
       let filteredSessions = [];
 
+      // Parses through each session in the round
       sessions.map(function(session){
-        let filterResult = newFilter.map(function(val){
-          let sessVals = _.flatten(_.values(session), true);
 
-          sessVals = sessVals.map(function(val){
+        // Creates an array to contain a boolean for each filter value [True = Matches Filter]
+        let filterResult = newFilter.map(function(vals){
+          vals = vals.map(function(val){
             return val.toLowerCase();
           });
+          // console.log(_.values(session));
+          let sessVals = _.flatten(_.values(session), true);
+          // console.log(sessVals);
 
-          if(sessVals.indexOf(val) !== -1){
+          sessVals = sessVals.map(function(sessVal){
+            return sessVal.toLowerCase();
+          });
+
+          let filterTypeResults = vals.map(function(val){
+            if(sessVals.indexOf(val) !== -1){
+              return true;
+            } else{
+              return false;
+            }
+          });
+
+          if(filterTypeResults.indexOf(true) !== -1){
             return true;
           } else{
             return false;
