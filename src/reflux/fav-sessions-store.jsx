@@ -19,6 +19,7 @@ let FavSessionStore = Reflux.createStore({
     let ca = document.cookie.split(';');
     let cdata = '';
     ca.map(function(c){
+      console.log('Look here', c);
       while(c.charAt(0) === ' ') c = c.substring(1);
       if(c.indexOf(name) === 0){
         cdata = c.substring(name.length, c.length)

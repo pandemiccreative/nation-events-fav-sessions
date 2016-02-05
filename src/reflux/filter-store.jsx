@@ -13,6 +13,7 @@ let filterStore = Reflux.createStore({
     session: []
   },
   toggleFilter: function(e){
+    console.log(e);
     if(e.target.type === 'checkbox' && e.target.checked){
       this.addToFilter(e.target.type, e.target.value);
     } else if(e.target.type === 'checkbox' && !e.target.checked){
